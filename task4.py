@@ -20,14 +20,14 @@ contacts = {}
 
 @input_error
 def add_contact(args, contacts):
-    name, phone = args  
+    name, phone = args
     contacts[name] = phone
     return f"Contact {name} added with phone {phone}."
 
 
 @input_error
 def change_contact(args, contacts):
-    name, phone = args  
+    name, phone = args
     if name not in contacts:
         raise KeyError
     contacts[name] = phone
@@ -36,7 +36,7 @@ def change_contact(args, contacts):
 
 @input_error
 def get_phone(args, contacts):
-    name = args[0]  
+    name = args[0]
     if name not in contacts:
         raise KeyError
     return f"{name}'s phone is {contacts[name]}."
@@ -46,10 +46,8 @@ def get_phone(args, contacts):
 def show_all(args, contacts):
     if not contacts:
         return "No contacts available."
-    result = ""
-    for name, phone in contacts.items():
-        result += f"{name}: {phone}\n"
-    return result.strip()
+    result = "\n".join(f"{name}: {phone}" for name, phone in contacts.items())
+    return result
 
 
 
@@ -81,8 +79,8 @@ def main():
             print("Enter a command.")
             continue
 
-        command = parts[0]
-        args = parts[1:]
+        command = " ".join(parts[:2]) if parts[0] == "show" and parts[1] == "all" else parts[0]
+        args = parts[2:] if command == "show all" else parts[1:]
 
         
         response = handler(command, args)
