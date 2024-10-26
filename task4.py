@@ -20,18 +20,14 @@ contacts = {}
 
 @input_error
 def add_contact(args, contacts):
-    if len(args) < 2:
-        raise ValueError
-    name, phone = args
+    name, phone = args  
     contacts[name] = phone
     return f"Contact {name} added with phone {phone}."
 
 
 @input_error
 def change_contact(args, contacts):
-    if len(args) < 2:
-        raise ValueError
-    name, phone = args
+    name, phone = args  
     if name not in contacts:
         raise KeyError
     contacts[name] = phone
@@ -40,9 +36,7 @@ def change_contact(args, contacts):
 
 @input_error
 def get_phone(args, contacts):
-    if len(args) < 1:
-        raise IndexError
-    name = args[0]
+    name = args[0]  
     if name not in contacts:
         raise KeyError
     return f"{name}'s phone is {contacts[name]}."
@@ -66,7 +60,7 @@ def handler(command, args):
         return change_contact(args, contacts)
     elif command == "phone":
         return get_phone(args, contacts)
-    elif command == "show all":
+    elif command in ["show all", "show_all"]:
         return show_all(args, contacts)
     else:
         return "Unknown command."
